@@ -1,0 +1,16 @@
+Small robots
+
+Zombot: Left all the used or broken robots at streets is a long tradition. Mysteriously, in around 30 years ago there were reports of those robots "reviving".
+Revived robots only preserve the basic behavior and command of self-preservation, and therefore wander around and attack others, which let them be called "zombots".
+In that planet, since Seeker series is used commonly, and most of the zombots are Seeker(mainly T7) with broken plates, armors, or limbs.
+
+Seeker-T7: Usually robots that are built for structure maintainance. After the riot of robots, they become lethal killers. 
+Their work is to seek for any human lives and intruders. The player is recognized as their target, so they will run after and attack them.
+
+Medium-sized robots
+
+Tank: A kind of robots that used for transportation, and therefore they are still huge and sustain a lot of damage even after they are turned into killers.
+Their main attack way is to chase after player and dash toward them when close enough. An easy way to stop them is to use bow to shoot them when dashing.
+
+Manhattan Transfer: A drone that can locate the player. After they were planted with a minigun, they simultaneously gained the rights to kill those who are wanted.
+They fly up in the sky and shoot bullets toward player. A quick way to defeat them is to dash toward them and knock them down, or use the bow.
