@@ -1,3 +1,18 @@
+Player
+Abilities: double jump, dash, climb on the walls
+dash will offset
+Corebreak: drag the core of robots out and crumb them to fill energy gauge
+
+Enemies:
+All robots could be faltered with damage/abilities. Damage falters will happen for 0.5s, when 20%/25%/30% of their lives are lost.
+Ability falters will happen for 1s, whenever they are affected by abilities that can falter robots. Falter durations are covered by the newest falter.
+When enemies lost their lives to 20%, their core unstablized, and player can perform corebreak on them to execute them and gain extra energy.
+Core unstable will last for 5s, in which all enemies will receive double damage from player. 
+Enemies are categorized in small robots, medium-sized robots, and prototypes. Most of the small robots have lives <= 300, medium sized robots
+have lives <= 2000, prototype robots have lives <= 4000, prototype bosses have lives <= 6000 for each phase.
+Most of the small robots are humanoids that have an original purpose in human community, most of the medium sized robots have a more
+special occupation or served in organs of violence. Most of the prototypes are rare things or have some purposes and related to the story.
+
 Small robots
 
 Zombot: Left all the used or broken robots at streets is a long tradition. Mysteriously, in around 30 years ago there were reports of those robots "reviving".
@@ -6,11 +21,16 @@ In that planet, since Seeker series is used commonly, and most of the zombots ar
 
 Seeker-T7: Usually robots that are built for structure maintainance. After the riot of robots, they become lethal killers. 
 Their work is to seek for any human lives and intruders. The player is recognized as their target, so they will run after and attack them.
+Their core is placed at their chest, just like the player, so their corebreak animation is the player punch them to destablize them and then drag the core out.
 
 Medium-sized robots
 
 Tank: A kind of robots that used for transportation, and therefore they are still huge and sustain a lot of damage even after they are turned into killers.
 Their main attack way is to chase after player and dash toward them when close enough. An easy way to stop them is to use bow to shoot them when dashing.
+Their core is placed in their body, so their corebreak animation is the player stab/pierce their chest and drag their core, but in some animations they could resist.
 
 Manhattan Transfer: A drone that can locate the player. After they were planted with a minigun, they simultaneously gained the rights to kill those who are wanted.
 They fly up in the sky and shoot bullets toward player. A quick way to defeat them is to dash toward them and knock them down, or use the bow.
+Their core is placed in where batteries are usually placed on drones, so their corebreak animation is to slash a part of them, catch the core, crumb it.
+
+Prototypes
