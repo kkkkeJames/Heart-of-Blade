@@ -1,7 +1,20 @@
-Player
-Abilities: double jump, dash, climb on the walls
-dash will offset
-Corebreak: drag the core of robots out and crumb them to fill energy gauge
+Player:
+The player can double jump, dash (with CD limitation), find secrets with attacks (and collect them).
+The player will attack using his 4 weapons. Each weapon has a normal attack (mouseleft) and special attack (mouseright). All weapons(except the basic sword) can be acquired throughout the game.
+The player can combine mouseleft and mouseright to make combos. While in combos, the player can dash while preserving the combo, which is called "offset".
+The player can collect tools and interact with the robot mechanist NPC to add new functions to a weapon. Each weapon has two special attack mode, and the player can switch between them.
+The first weapon is a sword. Normal attack is normal wielding, the first special attack is electric charge, which allows player to do charge attacks during combos. The second is undecided.
+The second weapon is a bow. Normal attack is shooting. The first special attack is super charge, which allows player to deal a lot of damage in bullet time during one attack.
+The second is mini missiles, which allows player to bombard enemies with a lot of small missiles.
+The third weapon is two daggers. Normal attack is stabs.
+The daggers have different purposes. The first one can attack to enemies, so it could be used as a hook. The second can directly absorb plasma energy, so it can be placed on ground and absorb, or do AOE execution.
+The fourth weapon is a rocket launcher. The first special attack allows player to shoot several homing rockets toward enemies continuously. The second one allows player to use remaining heat to jump.
+The player can interact with devices through several ways. There are platforms where player can stand on, and robots can also do that.
+There are pipes around the map. When close to them, press "G" so the player can preserve some of their horizontal momentum while gain a vertical momentum.
+There are magnetic forces around the map. Press "G" and the player can accelerate in a direct way.
+The player has a gauge of robot repairing fluid. When hit, the fluid will be cost to repair it (so basically it is HP bar). One of its specialty is that when amount of that fliud is 0, you can still bear an attack before you are done.
+The player has a special gauge called plasma energy gauge. Press "F" to enhance the next attack with a bar of energy, and it can change some of the combos.
+The energy gauge could be filled through: attacking enemies(based on how much enemies you attacked), doing corebreak: drag the core of robots out and crumb them to instantly fill energy gauge
 
 Enemies:
 All robots could be faltered with damage/abilities. Damage falters will happen for 0.5s, when 20%/25%/30% of their lives are lost.
@@ -34,3 +47,25 @@ They fly up in the sky and shoot bullets toward player. A quick way to defeat th
 Their core is placed in where batteries are usually placed on drones, so their corebreak animation is to slash a part of them, catch the core, crumb it.
 
 Prototypes
+
+
+The first level:
+The player received a request from a company representative, telling him to protect one of their technicians in the NGC259 galaxy, or the so called "silicon galaxy" because it is controlled by several robot companies.
+The player has an AI helper that give instructions about himself and sometimes have conversations with the player. They will be a point of fun for the game.
+In the first level, the player was in a crushed spaceship, since he wanted to go to the galaxy through spaceship but it crashed due to unexpected disturbance.
+The player plugged the AI helper on his head and searched for the reason of ship crash, but he discovered zombots.
+At first, he thought that the place he is on is only full of used robots, but later, when he went to repair the ship, he discovered a lot of seekers that are hunting human.
+The player then defeated seekers and opened the power engine to locate the target, but then he discovered the place he was landing were full of robots with no human life detected.
+The player had another fight, realizing he could not repair the ship, and eventually get out, realizing he is on a civil outpost of that galaxy. There he had another fight, in which the Tank appeared.
+After defeating them, the player thought something had happened to that galaxy, otherwise, the outpost should not be without human, and Tank should not be used in fighting.
+Suddenly, the AI detected a human life, which is their target. They got to the target, but the target was dying.
+The target scoffed down the player, claiming that instead of a justice fighter as he claimed, he is just a lapdog of great companies.
+He wanted to work for saving lives and stopping disputes, while what he did recently is just helping those companies to achieve their goals.
+The player said that he had his own considerations and still wanted to save lives, and he wanted to save the target.
+The target said he's without hope, and told the player what the company really wanted him to do is not to save his life, but to acquire something carred by him.
+He went to the galaxy with the order from the company, while someday all the robots killed all the humans and occupied everywhere in the galaxy.
+The target then handed a mechanical device to the player, and told him not to open it if he want to complete the mission. 
+The target told the player to protect that device while sending it to the control tower of the planet Gliese, then he suicided with the last bullet in his plasma gun.
+The player explored the outpost, discovered a magnetic bow and collect it. The bow can charge up to do heavy attacks, which can stop the Tank with one shot when it is rushing.
+In the next battle, the player encountered Manhattan Transfer. After dealing with all them, the player continued moving, and discovered a planet slide gate.
+The player had the final battle in front of the slide gate and activated it, sliding to the next planet, and finish the level.
