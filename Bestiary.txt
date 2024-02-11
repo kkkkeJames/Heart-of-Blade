@@ -30,7 +30,7 @@ Small robots
 
 Zombot: Left all the used or broken robots at streets is a long tradition. Mysteriously, in around 30 years ago there were reports of those robots "reviving".
 Revived robots only preserve the basic behavior and command of self-preservation, and therefore wander around and attack others, which let them be called "zombots".
-In that planet, since Seeker series is used commonly, and most of the zombots are Seeker(mainly T7) with broken plates, armors, or limbs.
+In that galaxy, Seeker series are used commonly, so most of the zombots are Seeker(mainly T7) with broken plates, armors, or limbs.
 
 Seeker-T7: Usually robots that are built for structure maintainance. After the riot of robots, they become lethal killers. 
 Their work is to seek for any human lives and intruders. The player is recognized as their target, so they will run after and attack them.
