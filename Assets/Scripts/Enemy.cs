@@ -20,7 +20,7 @@ public abstract class Enemy : MonoBehaviour
         if (immuneTime > 0) immuneTime -= Time.deltaTime;
         if (health <= 0)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().health += 20;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().health += 20;
             Destroy(gameObject);
         }
     }
