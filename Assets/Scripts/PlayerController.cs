@@ -41,41 +41,21 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
+    //TO DO: UPDATE THIS DAMN THING TO A STATE MACHINE!!!!!!
     void Update()
     {
-        if (immuneTime > 0) immuneTime -= Time.deltaTime;
-        if (health <= 0) Destroy(gameObject);
+        if (immuneTime > 0) immuneTime -= Time.deltaTime; //immune time
+        if (health <= 0) Destroy(gameObject); //if HP go below 0, destroy the game object(add the special "last breath" in future updates)
 
-        float dirX = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
-        if (dirX > 0) direction = 1;
-        else if (dirX < 0) direction = -1;
-        isOnGroundCheck();
-        CheckAnimation(dirX);
-        if (isOnGround) jumpCount = 2;
+        isOnGroundCheck(); //check if the player is on ground
+        if (isOnGround) jumpCount = 2; //if on ground, allows double jump
 
-        if (Input.GetButtonDown("Dash") && !isDash && dashCount > 0)
+        if (!isDash && Input.GetButtonDown("Fire1") && !isAttack) //if input attack && not dashing && not already attacking)
         {
-            dashCount--;
-            dashCD = 0.4f;
-            dashTime = 0.2f;
-            isDash = true;
-            dashDir = direction;
+            isAttack = true;
+            attackTime = 0.27f;
         }
-        if (isDash)
-        {
-            dashTime -= Time.deltaTime;
-            rb.velocity = new Vector2(dashDir * moveSpeed * 3.5f, 0);
-            if (dashTime <= 0) isDash = false;
-        }
-        dashCD -= Time.deltaTime;
-        if (dashCD <= 0)
-        {
-            dashCD = 0;
-            if (dashCount < 1) dashCount++;
-        }
-
-        if (isAttack)
+        if (isAttack) //if attacking
         {
             attackTime -= Time.deltaTime;
             if (attackTime <= 0)
@@ -83,30 +63,59 @@ public class PlayerController : MonoBehaviour
                 isAttack = false;
                 anim.SetBool("attacking", false);
             }
+            if (isOnGround) rb.velocity = new Vector2(0, 0); //if attack on ground, set the velocity to 0
         }
 
-        if (Input.GetButtonDown("Jump"))
+        float dirX = Input.GetAxisRaw("Horizontal");
+        if (!isAttack) //if not attacking, the player can change direction based on horizontal move input
+        {
+            if (dirX > 0) direction = 1;
+            else if (dirX < 0) direction = -1;
+        }
+        if (!isAttack || !isOnGround) //if not performing ground attack, the player can move freely (not attacking or jump attacking)
+        {
+            rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        }
+
+        if (Input.GetButtonDown("Dash") && dashCount > 0 && !isDash && !isAttack) //if input dashing && not dashing && can dash && is not attacking
+        {
+            dashCount--;
+            dashCD = 0.4f;
+            dashTime = 0.2f;
+            isDash = true;
+            dashDir = direction;
+        }
+        if (isDash) //if dashing, doing all the stats
+        {
+            dashTime -= Time.deltaTime;
+            rb.velocity = new Vector2(dashDir * moveSpeed * 3.5f, 0);
+            if (dashTime <= 0) isDash = false;
+        }
+        dashCD -= Time.deltaTime;
+        if (dashCD <= 0) //calculating dash CD
+        {
+            dashCD = 0;
+            if (dashCount < 1) dashCount++;
+        }
+
+        if (Input.GetButtonDown("Jump") && jumpCount > 0 && !isDash && !isAttack) //if input jump && can jump && not dashing or attacking
         {
             jumpCount--;
-            if(jumpCount > 0) rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-        }
-        if (!isDash && Input.GetButtonDown("Fire1") && !isAttack)
-        {
-            isAttack = true;
-            attackTime = 0.27f;
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         }
 
+        CheckAnimation(dirX);
         Debug.Log(health);
     }
     void isOnGroundCheck()
     {
-        if (myCapsule.IsTouchingLayers(magnetMask))
+        if (myCapsule.IsTouchingLayers(magnetMask)) //if touching magnets, is on ground
         {
             isOnGround = true;
         }
         else
         {
-            if (myFeet.IsTouchingLayers(groundMask))
+            if (myFeet.IsTouchingLayers(groundMask)) //if feet is touching ground, is on ground
             {
                 isOnGround = true;
             }
