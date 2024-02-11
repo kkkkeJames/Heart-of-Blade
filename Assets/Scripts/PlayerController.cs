@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    //TO DO: UPDATE THIS DAMN THING TO A STATE MACHINE!!!!!!
+    //TO DO: UPDATE THIS THING TO A STATE MACHINE!!!!!!
     void Update()
     {
         if (immuneTime > 0) immuneTime -= Time.deltaTime; //immune time
@@ -50,6 +50,17 @@ public class PlayerController : MonoBehaviour
         isOnGroundCheck(); //check if the player is on ground
         if (isOnGround) jumpCount = 2; //if on ground, allows double jump
 
+        Attack();
+        float dirX = Input.GetAxisRaw("Horizontal");
+        Move(dirX);
+        Dash();
+        Jump();
+
+        CheckAnimation(dirX);
+        Debug.Log(health);
+    }
+    void Attack()
+    {
         if (!isDash && Input.GetButtonDown("Fire1") && !isAttack) //if input attack && not dashing && not already attacking)
         {
             isAttack = true;
@@ -65,8 +76,9 @@ public class PlayerController : MonoBehaviour
             }
             if (isOnGround) rb.velocity = new Vector2(0, 0); //if attack on ground, set the velocity to 0
         }
-
-        float dirX = Input.GetAxisRaw("Horizontal");
+    }
+    void Move(float dirX)
+    {
         if (!isAttack) //if not attacking, the player can change direction based on horizontal move input
         {
             if (dirX > 0) direction = 1;
@@ -76,7 +88,17 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
         }
-
+    }
+    void Jump()
+    {
+        if (Input.GetButtonDown("Jump") && jumpCount > 0 && !isDash && !isAttack) //if input jump && can jump && not dashing or attacking
+        {
+            jumpCount--;
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        }
+    }
+    void Dash()
+    {
         if (Input.GetButtonDown("Dash") && dashCount > 0 && !isDash && !isAttack) //if input dashing && not dashing && can dash && is not attacking
         {
             dashCount--;
@@ -97,15 +119,6 @@ public class PlayerController : MonoBehaviour
             dashCD = 0;
             if (dashCount < 1) dashCount++;
         }
-
-        if (Input.GetButtonDown("Jump") && jumpCount > 0 && !isDash && !isAttack) //if input jump && can jump && not dashing or attacking
-        {
-            jumpCount--;
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-        }
-
-        CheckAnimation(dirX);
-        Debug.Log(health);
     }
     void isOnGroundCheck()
     {
