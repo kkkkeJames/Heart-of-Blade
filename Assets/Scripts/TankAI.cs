@@ -6,8 +6,7 @@ using Unity.Mathematics;
 public class TankAI : Enemy
 {
     private Rigidbody2D rb;
-    private CapsuleCollider2D myCapsule;
-    private BoxCollider2D myFeet;
+    private BoxCollider2D myCollider;
 
     // time before dash ends
     [SerializeField] private float dashDuration = 2f;
@@ -66,10 +65,13 @@ public class TankAI : Enemy
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // only deal collision damage if tank dashes into player
         if (collision.CompareTag("Player") && isDashing)
         {
             collision.GetComponent<PlayerMovement>().GetHit(damage, 0.2f);
         }
+
+        //stop dashing if tank hits something
         isDashing = false;
         currDashDuration = dashDuration;
     }
