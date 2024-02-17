@@ -14,6 +14,7 @@ public class TankAI : Enemy
     // time before dash can start
     [SerializeField] private float dashCooldown = 2f;
     [SerializeField] private float dashSpeed = 2f;
+    [SerializeField] private int damage = 10;
 
     private Vector2 baseSpeed = new Vector2(6f, 0f);
     private float currDashCooldown;
@@ -36,18 +37,17 @@ public class TankAI : Enemy
     {
         base.Update();
 
-        if (currDashCooldown <= 0) {
+        // start dash when conditions are met
+        if (currDashCooldown <= 0 && math.abs(rb.position.x - playerTransform.position.x) <= 6f) {
             isDashing = true;
             rb.velocity = new Vector2(dashSpeed * rb.velocity.x, baseSpeed.y);
             currDashCooldown = dashCooldown;
         }
 
+        // end dash when conditions are met
         if (currDashDuration <= 0) {
             isDashing = false;
             currDashDuration = dashDuration;
-            if (playerTransform.position.x >= transform.position.x) {
-                rb.velocity = baseSpeed;
-            } else rb.velocity = new Vector2(-baseSpeed.x, baseSpeed.y);
         }
 
         // daaaaaaaash
@@ -57,16 +57,20 @@ public class TankAI : Enemy
 
         // switch direction to follow player iff not dashing
         else {
-
+            if (playerTransform.position.x >= transform.position.x) {
+                rb.velocity = baseSpeed;
+            } else rb.velocity = new Vector2(-baseSpeed.x, baseSpeed.y);
             currDashCooldown -= Time.deltaTime;
         } 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && isDashing)
         {
-            collision.GetComponent<PlayerMovement>().GetHit(10, 0.2f);
+            collision.GetComponent<PlayerMovement>().GetHit(damage, 0.2f);
         }
+        isDashing = false;
+        currDashDuration = dashDuration;
     }
 }
