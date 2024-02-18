@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 8f;
     [SerializeField] private int jumpCount = 2;
     [SerializeField] private int dashCount = 1;
+    [SerializeField] private int damage = 50;
     private int direction = 1;
     private bool isOnGround;
 
@@ -23,6 +24,12 @@ public class PlayerController : MonoBehaviour
 
     private bool isAttack = false;
     private float attackTime = 0.15f;
+    private bool isCharge = false;
+    private float chargeTime = 0;
+
+    private int comboSerial = 0; //the serial of combo
+    private int comboCount = 0; //the count of combo
+    private float comboTime = 0; //the duration of combo window
 
     public int health;
     protected float immuneTime;
@@ -57,24 +64,243 @@ public class PlayerController : MonoBehaviour
         Jump();
 
         CheckAnimation(dirX);
-        Debug.Log(health);
+        //Debug.Log(health);
     }
+    private bool isMoveAttack = false;
     void Attack()
     {
         if (!isDash && Input.GetButtonDown("Fire1") && !isAttack) //if input attack && not dashing && not already attacking)
         {
-            isAttack = true;
-            attackTime = 0.27f;
+            if (comboTime < 0.55f) Combo(true, false);
+            else Combo(false, false);
+            //isAttack = true;
+            //attackTime = 0.27f;
+            //damage = 50;
         }
         if (isAttack) //if attacking
         {
             attackTime -= Time.deltaTime;
             if (attackTime <= 0)
             {
+                comboTime = 0.7f;
+                isMoveAttack = false;
                 isAttack = false;
                 anim.SetBool("attacking", false);
             }
             if (isOnGround) rb.velocity = new Vector2(0, 0); //if attack on ground, set the velocity to 0
+            if (isAttack && isMoveAttack) rb.velocity = new Vector2(direction * 120 * attackTime, 0);
+        }
+        //if on the ground/not attack or dashing/press down right key, start charging
+        if (isOnGround && !isDash && !isAttack && Input.GetButtonDown("Fire2")) isCharge = true;
+        //when charging, chargeTime increases
+        if (isCharge)
+        {
+            rb.velocity = new Vector2(0, 0);
+            chargeTime += Time.deltaTime;
+        }
+        //if the player already charges for more than 0.25f, and if it charges for more than 4f or release right key, do a charge attack
+        if (isCharge && chargeTime >= 0.25f && (chargeTime >= 4f || !Input.GetButton("Fire2")))
+        {
+            anim.SetBool("attacking", true);
+            Combo(false, true);
+            comboTime = 0.8f;
+            //anim.SetBool("attacking", true);
+            //isCharge = false;
+            //isAttack = true;
+            //attackTime = 0.27f;
+            //damage = (int)(50 * (1 + chargeTime / 2));
+            //chargeTime = 0;
+        }
+        if (!isDash && !isAttack && !isCharge) comboTime -= Time.deltaTime;
+        if (!isAttack && comboTime <= 0)
+        {
+            comboTime = 0;
+            comboCount = 0;
+            comboSerial = 0;
+        }
+    }
+    void Combo(bool slowed, bool right)
+    {
+        if (comboSerial == 0 && slowed)
+        {
+            if (comboCount == 1) comboSerial = 1;
+            if (comboCount == 2) comboSerial = 2;
+        }
+        if (comboSerial == 0 && right)
+        {
+            if (comboCount == 0) comboSerial = 3;
+            if (comboCount == 1) comboSerial = 4;
+            if (comboCount == 2) comboSerial = 5;
+        }
+        switch (comboSerial)
+        {
+            case 0: //normal atk -> normal atk -> normal atk
+                if (comboCount == 0)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 50;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 1)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 50;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 2)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 60;
+                    comboSerial = 0;
+                    comboCount = 0;
+                    return;
+                }
+                break;
+            case 1: //normal atk (pause) -> normal atk -> normal atk -> normal atk
+                if (comboCount == 0)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 50;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 1)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 60;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 2)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 65;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 3)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 65;
+                    comboSerial = 0;
+                    comboCount = 0;
+                    return;
+                }
+                break;
+            case 2: //normal atk -> normal atk (pause) -> normal atk -> normal atk -> normal atk
+                if (comboCount == 0)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 50;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 1)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 50;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 2)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 40;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 3)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 45;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 3)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 45;
+                    comboSerial = 0;
+                    comboCount = 0;
+                    return;
+                }
+                break;
+            case 3: //special atk (charge)
+                if (comboCount == 0)
+                {
+                    isCharge = false;
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = (int)(50 * (1 + chargeTime / 2));
+                    chargeTime = 0;
+                    comboSerial = 0;
+                    comboCount = 0;
+                    return;
+                }
+                break;
+            case 4: //normal atk -> special atk
+                if (comboCount == 0)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 50;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 1)
+                {
+                    isAttack = true;
+                    isMoveAttack = true;
+                    attackTime = 0.27f;
+                    damage = 60;
+                    comboSerial = 0;
+                    comboCount = 0;
+                    return;
+                }
+                break;
+            case 5: //normal atk -> normal atk -> special atk (charge)
+                if (comboCount == 0)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 50;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 1)
+                {
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = 60;
+                    comboCount++;
+                    return;
+                }
+                if (comboCount == 2)
+                {
+                    isCharge = false;
+                    isAttack = true;
+                    attackTime = 0.27f;
+                    damage = (int)(85 * (1 + chargeTime / 2));
+                    chargeTime = 0;
+                    comboSerial = 0;
+                    comboCount = 0;
+                    return;
+                }
+                break;
         }
     }
     void Move(float dirX)
@@ -84,14 +310,14 @@ public class PlayerController : MonoBehaviour
             if (dirX > 0) direction = 1;
             else if (dirX < 0) direction = -1;
         }
-        if (!isAttack || !isOnGround) //if not performing ground attack, the player can move freely (not attacking or jump attacking)
+        if (!isCharge && (!isAttack || !isOnGround)) //if not performing ground attack/charge, the player can move freely (not attacking or jump attacking)
         {
             rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
         }
     }
     void Jump()
     {
-        if (Input.GetButtonDown("Jump") && jumpCount > 0 && !isDash && !isAttack) //if input jump && can jump && not dashing or attacking
+        if (Input.GetButtonDown("Jump") && jumpCount > 0 && !isDash && !isAttack && !isCharge) //if input jump && can jump && not dashing or attacking
         {
             jumpCount--;
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
@@ -99,7 +325,7 @@ public class PlayerController : MonoBehaviour
     }
     void Dash()
     {
-        if (Input.GetButtonDown("Dash") && dashCount > 0 && !isDash && !isAttack) //if input dashing && not dashing && can dash && is not attacking
+        if (Input.GetButtonDown("Dash") && dashCount > 0 && !isDash && !isAttack && !isCharge) //if input dashing && not dashing && can dash && is not attacking
         {
             dashCount--;
             dashCD = 0.4f;
@@ -204,7 +430,6 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.CompareTag("Enemy"))
         {
-            int damage = Random.Range(45, 56);
             collision.GetComponent<Enemy>().GetHit(damage, 0.2f);
         }
     }
