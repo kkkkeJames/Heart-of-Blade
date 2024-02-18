@@ -13,7 +13,6 @@ public class TankAI : Enemy
     // time before dash can start
     [SerializeField] private float dashCooldown = 2f;
     [SerializeField] private float dashSpeed = 2f;
-    [SerializeField] private int damage = 10;
 
     private Vector2 baseSpeed = new Vector2(6f, 0f);
     private float currDashCooldown;
@@ -25,8 +24,7 @@ public class TankAI : Enemy
     {
         base.Start();
         rb = GetComponent<Rigidbody2D>();
-        myFeet = GetComponent<BoxCollider2D>();
-        myCapsule = GetComponent<CapsuleCollider2D>();
+        myCollider = GetComponent<BoxCollider2D>();
         health = 500;
         currDashCooldown = dashCooldown;
     }
@@ -68,7 +66,7 @@ public class TankAI : Enemy
         // only deal collision damage if tank dashes into player
         if (collision.CompareTag("Player") && isDashing)
         {
-            collision.GetComponent<PlayerMovement>().GetHit(damage, 0.2f);
+            collision.GetComponent<PlayerMovement>().GetHit(10, 0.2f);
         }
 
         //stop dashing if tank hits something
