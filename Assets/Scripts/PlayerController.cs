@@ -418,6 +418,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("attacking", true);
         }
     }
+    
     public void GetHit(int getdamage, float immunetime)
     {
         if (immuneTime <= 0)
