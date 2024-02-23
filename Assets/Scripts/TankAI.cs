@@ -66,7 +66,7 @@ public class TankAI : Enemy
         // only deal collision damage if tank dashes into player
         if (collision.CompareTag("Player") && isDashing)
         {
-            collision.GetComponent<PlayerMovement>().GetHit(10, 0.2f);
+            collision.GetComponent<PlayerController>().GetHit(10, 0.2f);
         }
 
         //stop dashing if tank hits something
