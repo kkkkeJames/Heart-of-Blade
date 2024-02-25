@@ -289,6 +289,12 @@ MonoBehaviour:
   health: 0
   damage: 0
   playerTransform: {fileID: 0}
+  moveSpeed: 0.5
+  jumpTime: 3
+  jumpSpeed: 2
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!95 &6938480579931268226
 Animator:
   serializedVersion: 5
