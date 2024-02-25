@@ -121,6 +121,11 @@ public class PlayerController : MonoBehaviour
     }
     void Combo(bool slowed, bool right)
     {
+        if (direction == 1)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else transform.localScale = new Vector3(-1, 1, 1);
         if (comboSerial == 0 && slowed)
         {
             if (comboCount == 1) comboSerial = 1;
@@ -388,11 +393,11 @@ public class PlayerController : MonoBehaviour
         }
         if (dirX > 0)
         {
-            sr.flipX = false;
+            transform.localScale = new Vector3(1, 1, 1);
         }
         if (dirX < 0)
         {
-            sr.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         if (!isOnGround)
         {
