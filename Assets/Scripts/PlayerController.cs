@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
         Attack();
         float dirX = Input.GetAxisRaw("Horizontal");
         Move(dirX);
+        LingerSpeed();
         Dash();
         Jump();
 
@@ -86,12 +87,18 @@ public class PlayerController : MonoBehaviour
                 isMoveAttack = false;
                 isAttack = false;
                 anim.SetBool("attacking", false);
+                anim.SetBool("chargeattacking1", false);
+                anim.SetBool("chargeattacking2", false);
             }
             if (isOnGround) rb.velocity = new Vector2(0, 0); //if attack on ground, set the velocity to 0
             if (isAttack && isMoveAttack) rb.velocity = new Vector2(direction * 120 * attackTime, 0);
         }
         //if on the ground/not attack or dashing/press down right key, start charging
-        if (isOnGround && !isDash && !isAttack && Input.GetButtonDown("Fire2")) isCharge = true;
+        if (isOnGround && !isDash && !isAttack && Input.GetButtonDown("Fire2"))
+        {
+            isCharge = true;
+            anim.SetBool("charging", true);
+        }
         //when charging, chargeTime increases
         if (isCharge)
         {
@@ -101,7 +108,8 @@ public class PlayerController : MonoBehaviour
         //if the player already charges for more than 0.25f, and if it charges for more than 4f or release right key, do a charge attack
         if (isCharge && chargeTime >= 0.25f && (chargeTime >= 4f || !Input.GetButton("Fire2")))
         {
-            anim.SetBool("attacking", true);
+            anim.SetBool("charging", false);
+            //anim.SetBool("attacking", true);
             Combo(false, true);
             comboTime = 0.8f;
             //anim.SetBool("attacking", true);
@@ -247,6 +255,7 @@ public class PlayerController : MonoBehaviour
             case 3: //special atk (charge)
                 if (comboCount == 0)
                 {
+                    anim.SetBool("chargeattacking1", true);
                     isCharge = false;
                     isAttack = true;
                     attackTime = 0.27f;
@@ -268,6 +277,7 @@ public class PlayerController : MonoBehaviour
                 }
                 if (comboCount == 1)
                 {
+                    anim.SetBool("chargeattacking1", true);
                     isAttack = true;
                     isMoveAttack = true;
                     attackTime = 0.27f;
@@ -296,6 +306,7 @@ public class PlayerController : MonoBehaviour
                 }
                 if (comboCount == 2)
                 {
+                    anim.SetBool("chargeattacking2", true);
                     isCharge = false;
                     isAttack = true;
                     attackTime = 0.27f;
@@ -306,6 +317,16 @@ public class PlayerController : MonoBehaviour
                     return;
                 }
                 break;
+        }
+    }
+    public float lingerSpeedTime = 0f;
+    public Vector2 lingerSpeed = Vector2.zero;
+    void LingerSpeed()
+    {
+        if (lingerSpeedTime > 0)
+        {
+            lingerSpeedTime -= Time.deltaTime;
+            rb.velocity = lingerSpeed;
         }
     }
     void Move(float dirX)
