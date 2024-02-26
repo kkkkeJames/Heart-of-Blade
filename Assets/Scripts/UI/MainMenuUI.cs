@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Application = UnityEngine.Device.Application;
 
@@ -52,21 +53,21 @@ public class MainMenu : UI
     private void OnNewGameClicked()
     {
         Hide();
-        Debug.Log("NEW GAME!");
-        // SaveSlotsMenu.Instance.DisplayNewGameMenu();
+        Debug.Log("NEW GAME is not currently implemented but here we go...");
+        Loader.Load("MainScene");
     }
 
     private void OnContinueGameClicked()
     {
         ToggleButtons(false);
         Debug.Log("CONTINUE");
-        // Loader.Load(DataPersistenceManager.Instance.GameData.LastCheckPointScene);
+        Loader.Load("MainScene");
     }
     
     private void OnLoadGameClicked() 
     {
         Hide();
-        Debug.Log("LOAD GAME");
+        Debug.LogError("LOAD GAME is not currently implemented!");
         // SaveSlotsMenu.Instance.DisplayLoadGameMenu();
     }
 
@@ -90,6 +91,7 @@ public class MainMenu : UI
     private void OnSettingsClicked()
     {
         Hide();
+        Debug.LogError("SETTINGS is not currently implemented!");
         // OptionsMainMenu.Instance.Show();
     }
     
