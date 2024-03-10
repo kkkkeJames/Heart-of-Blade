@@ -455,7 +455,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("EliteEnemy"))
         {
             collision.GetComponent<Enemy>().GetHit(damage, 0.2f);
         }
