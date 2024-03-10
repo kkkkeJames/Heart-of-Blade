@@ -72380,6 +72380,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lingerSpeed: {x: 90, y: 10}
+  maxBoostRadius: 0.5
+  minBoostRadius: 2
 --- !u!66 &837078304
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -96572,6 +96574,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lingerSpeed: {x: 50, y: 0}
+  maxBoostRadius: 0.5
+  minBoostRadius: 2
 --- !u!50 &1685966266
 Rigidbody2D:
   serializedVersion: 4
@@ -96632,7 +96636,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 109, y: -11}
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.25, y: 1.25}
   m_Direction: 0
 --- !u!1 &1932523064
 GameObject:
@@ -96854,6 +96858,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lingerSpeed: {x: 55, y: 15}
+  maxBoostRadius: 0.5
+  minBoostRadius: 2
 --- !u!50 &2064409012
 Rigidbody2D:
   serializedVersion: 4
@@ -97065,7 +97071,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 123, y: -11}
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_Direction: 0
 --- !u!66 &2064409016
 CompositeCollider2D:
