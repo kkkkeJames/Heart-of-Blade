@@ -1,6 +1,6 @@
 {
     "files.exclude": {
-        "**/.DS_Store": true,
+        // "**/.DS_Store": true,
         "**/.git": true,
         "**/.vs": true,
         "**/.gitmodules": true,
@@ -42,7 +42,7 @@
         "**/*.mat": true,
         "**/*.meta": true,
         "**/*.prefab": true,
-        "**/*.unity": true,
+        // "**/*.unity": true,
         "build/": true,
         "Build/": true,
         "Library/": true,
