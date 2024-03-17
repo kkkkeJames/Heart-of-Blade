@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - PlayerAttack
+<<<<<<< HEAD
+=======
+  - OneWayPlatform
+>>>>>>> 4959da16c30f743e3f1a75c3dcdf41bae8fa73c8
   - EliteEnemy
   layers:
   - Default
