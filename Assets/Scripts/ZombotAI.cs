@@ -66,7 +66,7 @@ public class ZombotAI : Enemy
         */
         if (isAttack)
         {
-            rb.velocity = new Vector2(0, 0);
+            rb.velocity = new Vector2(0, rb.velocity.y);
         }
         if (isInAttack)
         {
