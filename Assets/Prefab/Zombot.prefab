@@ -292,6 +292,8 @@ MonoBehaviour:
   moveSpeed: 0.5
   jumpTime: 3
   jumpSpeed: 2
+  isAttack: 0
+  AttackTime: 0
   groundMask:
     serializedVersion: 2
     m_Bits: 0
