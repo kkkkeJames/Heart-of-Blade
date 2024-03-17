@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7774523592139487160}
   - component: {fileID: 2672960935789748916}
   - component: {fileID: 7697859849778451370}
+  - component: {fileID: 150548064830466197}
   m_Layer: 8
   m_Name: Seeker-T7
   m_TagString: Enemy
@@ -208,14 +209,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b255a6501ec613499c3fe287e42384e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 350
   damage: 0
+  direction: 0
   playerTransform: {fileID: 0}
   jumpTime: 2
   jumpSpeed: 2.5
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!95 &150548064830466197
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220701527600024545}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0b4072a3e74fbd14b9e31369008e741c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8298019510335871956
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +303,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.8365009, y: -0.27389878}
+  m_Offset: {x: 0.5707933, y: 0.28764838}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -291,5 +314,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8075309, y: 1.814293}
+  m_Size: {x: 0.75822425, y: 0.3734442}
   m_EdgeRadius: 0

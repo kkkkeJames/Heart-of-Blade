@@ -7,6 +7,7 @@ public class TankAI : Enemy
 {
     private Rigidbody2D rb;
     private BoxCollider2D myCollider;
+    private Animator anim;
 
     // time before dash ends
     [SerializeField] private float dashDuration = 2f;
@@ -16,7 +17,7 @@ public class TankAI : Enemy
 
     private Vector2 baseSpeed = new Vector2(6f, 0f);
     private float currDashCooldown;
-    private float currDashDuration = 0f;
+    private float currDashDuration = 2f;
     private bool isDashing;
 
     // Start is called before the first frame update
@@ -25,7 +26,7 @@ public class TankAI : Enemy
         base.Start();
         rb = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<BoxCollider2D>();
-        health = 500;
+        anim = GetComponent<Animator>();
         currDashCooldown = dashCooldown;
     }
 
@@ -36,13 +37,15 @@ public class TankAI : Enemy
 
         // start dash when conditions are met
         if (currDashCooldown <= 0 && math.abs(rb.position.x - playerTransform.position.x) <= 6f) {
+            anim.SetBool("dashing", true);
             isDashing = true;
-            rb.velocity = new Vector2(dashSpeed * rb.velocity.x, baseSpeed.y);
+            rb.velocity = new Vector2(dashSpeed * rb.velocity.x, rb.velocity.y);
             currDashCooldown = dashCooldown;
         }
 
         // end dash when conditions are met
         if (currDashDuration <= 0) {
+            anim.SetBool("dashing", false);
             isDashing = false;
             currDashDuration = dashDuration;
         }
@@ -55,8 +58,8 @@ public class TankAI : Enemy
         // switch direction to follow player iff not dashing
         else {
             if (playerTransform.position.x >= transform.position.x) {
-                rb.velocity = baseSpeed;
-            } else rb.velocity = new Vector2(-baseSpeed.x, baseSpeed.y);
+                rb.velocity = new Vector2(baseSpeed.x, rb.velocity.y);
+            } else rb.velocity = new Vector2(-baseSpeed.x, rb.velocity.y);
             currDashCooldown -= Time.deltaTime;
         } 
     }
@@ -66,11 +69,11 @@ public class TankAI : Enemy
         // only deal collision damage if tank dashes into player
         if (collision.CompareTag("Player") && isDashing)
         {
-            collision.GetComponent<PlayerController>().GetHit(10, 0.2f);
+            collision.GetComponent<PlayerController>().GetHit(30, 0.2f);
         }
 
         //stop dashing if tank hits something
-        isDashing = false;
-        currDashDuration = dashDuration;
+        //isDashing = false;
+        //currDashDuration = dashDuration;
     }
 }

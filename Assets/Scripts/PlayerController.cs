@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     //TO DO: UPDATE THIS THING TO A STATE MACHINE!!!!!!
     void Update()
     {
+        //Debug.Log(health);
         if (immuneTime > 0) immuneTime -= Time.deltaTime; //immune time
         if (health <= 0) Destroy(gameObject); //if HP go below 0, destroy the game object(add the special "last breath" in future updates)
 

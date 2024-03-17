@@ -7,6 +7,7 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] public int health;
     [SerializeField] public int damage;
     protected float immuneTime;
+    public int direction;
     public Transform playerTransform;
     // Start is called before the first frame update
     protected void Start()
@@ -23,6 +24,9 @@ public abstract class Enemy : MonoBehaviour
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().health += 20;
             Destroy(gameObject);
         }
+
+        if (direction == 1) transform.localScale = new Vector3(1, 1, 1);
+        else transform.localScale = new Vector3(-1, 1, 1);
     }
     public void GetHit(int getdamage, float immunetime)
     {

@@ -16,7 +16,10 @@ public class ZombotAI : Enemy
     private bool isOnGround;
 
     public bool isAttack = false;
-    public float AttackTime = 0f;
+    public bool isInAttack = false;
+    public float InAttackTime = 0.3f;
+    public bool AttackEnd = false;
+    public float AttackCD = 0.3f;
 
     public LayerMask groundMask;
     // Start is called before the first frame update
@@ -27,7 +30,6 @@ public class ZombotAI : Enemy
         myFeet = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
-        health = 100;
     }
 
     // Update is called once per frame
@@ -42,12 +44,12 @@ public class ZombotAI : Enemy
         {
             if (playerTransform.transform.position.x >= transform.position.x)
             {
-                sr.flipX = false;
+                direction = 1;
                 rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
             }
             else
             {
-                sr.flipX = true;
+                direction = -1;
                 rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
             }
         }
@@ -66,21 +68,30 @@ public class ZombotAI : Enemy
         {
             rb.velocity = new Vector2(0, 0);
         }
-        if (AttackTime > 0)
+        if (isInAttack)
         {
-            AttackTime -= Time.deltaTime;
-            if (AttackTime < 0) AttackTime = 0;
-            if (!sr.flipX) rb.velocity = new Vector2(AttackTime * 1.2f, 0);
-            else rb.velocity = new Vector2(-AttackTime * 1.4f, 0);
+            if (InAttackTime <= 0) InAttackTime = 0;
+            else InAttackTime -= Time.deltaTime;
+            if (direction == 1) rb.velocity = new Vector2(InAttackTime * 1f, 0);
+            else rb.velocity = new Vector2(-InAttackTime * 1f, 0);
         }
+        if (AttackEnd)
+        {
+            anim.SetBool("attack", false);
+            AttackCD = 0.3f;
+        }
+        if(AttackCD > 0) AttackCD -= Time.deltaTime;
+        else AttackCD = 0;
+        if (AttackCD == 0) AttackEnd = false;
     }
     void Attack()
     {
-        if (math.abs(playerTransform.transform.position.x - transform.position.x) <= 1.5f)
+        if (math.abs(playerTransform.transform.position.x - transform.position.x) <= 1.5f && AttackCD <= 0 && !isAttack)
         {
+            direction = playerTransform.transform.position.x > transform.position.x ? 1 : -1;
+            isAttack = true;
             anim.SetBool("attack", true);
         }
-        else anim.SetBool("attack", false);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

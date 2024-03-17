@@ -286,14 +286,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea84bc683f591c64a9d4108b682b0116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 200
   damage: 0
+  direction: 0
   playerTransform: {fileID: 0}
   moveSpeed: 0.5
   jumpTime: 3
   jumpSpeed: 2
   isAttack: 0
-  AttackTime: 0
+  isInAttack: 0
+  InAttackTime: 0.3
+  AttackEnd: 0
+  AttackCD: 0.1
   groundMask:
     serializedVersion: 2
     m_Bits: 0

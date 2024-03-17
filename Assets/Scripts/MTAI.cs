@@ -25,7 +25,6 @@ public class MTAI : Enemy
         base.Start();
         rb = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<BoxCollider2D>();
-        health = 400;
     }
 
     // Update is called once per frame
