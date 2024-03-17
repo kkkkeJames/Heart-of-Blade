@@ -31,6 +31,8 @@ public class MagnetAccelerator : MonoBehaviour
             Vector2 playerxy = new Vector2(playerTransform.position.x, playerTransform.position.y);
             float playerDistance = (playerxy - tilePosition).magnitude;
 
+            Vector2 directionalLingerSpeed = lingerSpeed * (player.GetComponent<Rigidbody2D>().velocity.x > 0f ? 1f : -1f);
+
             Vector2 playerSpeedBoost = lingerSpeed * Mathf.Min(Mathf.Max(minBoostRadius - playerDistance, 0f) / (minBoostRadius - maxBoostRadius), 1f);
             Debug.Log(playerDistance + ", " + playerSpeedBoost);
             player.GetComponent<PlayerController>().lingerSpeed = playerSpeedBoost;
