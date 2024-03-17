@@ -5,15 +5,13 @@ using UnityEngine.Tilemaps;
 
 public class MagnetAccelerator : MonoBehaviour
 {
-    private CapsuleCollider2D magnetAccelerator;
+    //private CapsuleCollider2D magnetAccelerator;
     [SerializeField] private Vector2 lingerSpeed;
-    [SerializeField] private float maxBoostRadius = 0.5f;
-    [SerializeField] private float minBoostRadius = 2f;
     
     // Start is called before the first frame update
     void Start()
     {
-        magnetAccelerator = GetComponent<CapsuleCollider2D>();
+        //magnetAccelerator = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -26,16 +24,9 @@ public class MagnetAccelerator : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             var player = GameObject.FindGameObjectWithTag("Player");
-            Transform playerTransform = player.GetComponent<Transform>().transform;
-            Vector2 tilePosition = magnetAccelerator.offset;// tilemap.CellToWorld(cellPosition);
-            Vector2 playerxy = new Vector2(playerTransform.position.x, playerTransform.position.y);
-            float playerDistance = (playerxy - tilePosition).magnitude;
+            Vector2 directionalLingerSpeed = new Vector2(lingerSpeed.x * player.GetComponent<PlayerController>().direction, lingerSpeed.y);
 
-            Vector2 directionalLingerSpeed = lingerSpeed * (player.GetComponent<Rigidbody2D>().velocity.x > 0f ? 1f : -1f);
-
-            Vector2 playerSpeedBoost = lingerSpeed * Mathf.Min(Mathf.Max(minBoostRadius - playerDistance, 0f) / (minBoostRadius - maxBoostRadius), 1f);
-            Debug.Log(playerDistance + ", " + playerSpeedBoost);
-            player.GetComponent<PlayerController>().lingerSpeed = playerSpeedBoost;
+            player.GetComponent<PlayerController>().lingerSpeed = directionalLingerSpeed;
             player.GetComponent<PlayerController>().lingerSpeedTime = 0.2f;
         }
     }

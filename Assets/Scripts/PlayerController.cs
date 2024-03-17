@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int jumpCount = 2;
     [SerializeField] private int dashCount = 1;
     [SerializeField] private int damage = 50;
-    private int direction = 1;
+    public int direction = 1;
     private bool isOnGround;
 
     private bool isDash = false;
