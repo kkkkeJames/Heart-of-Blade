@@ -30,7 +30,7 @@ public class UI : MonoBehaviour
     protected CanvasGroup canvasGroup;
     protected RectTransform rectTransform;
     protected bool alternativeGameObject = false;
-    public static readonly float animationTime = .6f;
+    public static readonly float animationTime = .7f;
     
     protected Coroutine fadeCoroutine;
     protected Coroutine delayedShowCoroutine;

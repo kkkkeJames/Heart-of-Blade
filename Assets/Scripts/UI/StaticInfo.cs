@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// class for storing all CONST fields such as static dictionaries, animation curves, etc
 ///
 /// Also provides useful access functions to them
 /// </summary>
-
 
 public class StaticInfoManager : MonoBehaviour
 {
