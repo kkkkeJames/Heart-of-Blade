@@ -22,11 +22,8 @@ public class MagnetAccelerator : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (Input.GetButton("Interact"))
-            {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lingerSpeed = lingerSpeed;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lingerSpeedTime = 0.2f;
-            }
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lingerSpeed = lingerSpeed;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lingerSpeedTime = 0.2f;
         }
     }
 }
