@@ -35,7 +35,8 @@ public class MTBulletAI : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerController>().GetHit(10, 0.2f);
+            int damage = UnityEngine.Random.Range(6, 12);
+            collision.GetComponent<PlayerController>().GetHit(damage, 0.2f);
             Destroy(gameObject);
         }
     }

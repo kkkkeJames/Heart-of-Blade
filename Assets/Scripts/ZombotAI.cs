@@ -37,52 +37,59 @@ public class ZombotAI : Enemy
     {
         base.Update();
         isOnGroundCheck();
-        if (isOnGround)
-            jumpTime = 2f;
-        Attack();
-        if (math.abs(playerTransform.transform.position.x - transform.position.x) > 1.5f && !isAttack)
+        if (!Stunned)
         {
-            if (playerTransform.transform.position.x >= transform.position.x)
+            if (isOnGround)
+                jumpTime = 2f;
+            Attack();
+            if (math.abs(playerTransform.transform.position.x - transform.position.x) > 1.5f && !isAttack)
             {
-                direction = 1;
-                rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+                if (playerTransform.transform.position.x >= transform.position.x)
+                {
+                    direction = 1;
+                    rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+                }
+                else
+                {
+                    direction = -1;
+                    rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+                }
             }
-            else
-            {
-                direction = -1;
-                rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-            }
-        }
 
-        /*
-        if (math.abs(playerTransform.position.x - transform.position.x) <= 2f && playerTransform.position.y > transform.position.y && !isAttack)
-        {
-            if (jumpTime > 0)
+            /*
+            if (math.abs(playerTransform.position.x - transform.position.x) <= 2f && playerTransform.position.y > transform.position.y && !isAttack)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-                jumpTime -= Time.deltaTime;
+                if (jumpTime > 0)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+                    jumpTime -= Time.deltaTime;
+                }
             }
+            */
+            if (isAttack)
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+            if (isInAttack)
+            {
+                if (InAttackTime <= 0) InAttackTime = 0;
+                else InAttackTime -= Time.deltaTime;
+                if (direction == 1) rb.velocity = new Vector2(InAttackTime * 1f, 0);
+                else rb.velocity = new Vector2(-InAttackTime * 1f, 0);
+            }
+            if (AttackEnd)
+            {
+                anim.SetBool("attack", false);
+                AttackCD = 0.3f;
+            }
+            if (AttackCD > 0) AttackCD -= Time.deltaTime;
+            else AttackCD = 0;
+            if (AttackCD == 0) AttackEnd = false;
         }
-        */
-        if (isAttack)
+        if (Stunned)
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            rb.velocity = new Vector2(-StunTime * direction * 1f, rb.velocity.y);
         }
-        if (isInAttack)
-        {
-            if (InAttackTime <= 0) InAttackTime = 0;
-            else InAttackTime -= Time.deltaTime;
-            if (direction == 1) rb.velocity = new Vector2(InAttackTime * 1f, 0);
-            else rb.velocity = new Vector2(-InAttackTime * 1f, 0);
-        }
-        if (AttackEnd)
-        {
-            anim.SetBool("attack", false);
-            AttackCD = 0.3f;
-        }
-        if(AttackCD > 0) AttackCD -= Time.deltaTime;
-        else AttackCD = 0;
-        if (AttackCD == 0) AttackEnd = false;
     }
     void Attack()
     {

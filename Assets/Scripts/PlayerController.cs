@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int jumpCount = 2;
     [SerializeField] private int dashCount = 1;
     [SerializeField] private int damage = 50;
-    private int direction = 1;
+    public int direction = 1;
     private bool isOnGround;
 
     private bool isDash = false;
@@ -32,7 +32,16 @@ public class PlayerController : MonoBehaviour
     private float comboTime = 0; //the duration of combo window
 
     public int health;
+    public int healthMax;
     protected float immuneTime;
+    public int energy;
+    public int energyMax;
+    public int energyLarge;
+    public int energyLargeMax;
+    public bool chargedAttack = false;
+    [SerializeField] private GameObject Swordwave2;
+
+    public int WeaponNum;
 
     public LayerMask groundMask;
     public LayerMask magnetMask;
@@ -45,13 +54,17 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         health = 100;
+        healthMax = 100;
+        energy = 100;
+        energyMax = 100;
+        energyLarge = 4;
+        energyLargeMax = 4;
     }
 
     // Update is called once per frame
     //TO DO: UPDATE THIS THING TO A STATE MACHINE!!!!!!
     void Update()
     {
-        //Debug.Log(health);
         if (immuneTime > 0) immuneTime -= Time.deltaTime; //immune time
         if (health <= 0) Destroy(gameObject); //if HP go below 0, destroy the game object(add the special "last breath" in future updates)
 
@@ -66,7 +79,13 @@ public class PlayerController : MonoBehaviour
         Jump();
 
         CheckAnimation(dirX);
-        //Debug.Log(health);
+        HealthBar.HealthCurrent = health;
+        HealthBar.HealthMax = healthMax;
+        energyLarge = energy / 25;
+        EnergyBar.EnergyCurrent = energy;
+        EnergyBar.EnergyMax = energyMax;
+        EnergyBar.EnergyLargeCurrent = energyLarge;
+        EnergyBar.EnergyLargeMax = energyLargeMax;
     }
     private bool isMoveAttack = false;
     void Attack()
@@ -103,6 +122,11 @@ public class PlayerController : MonoBehaviour
         //when charging, chargeTime increases
         if (isCharge)
         {
+            if (energy >= 25 && Input.GetButtonDown("Energy"))
+            {
+                energy -= 25;
+                chargedAttack = true;
+            }
             rb.velocity = new Vector2(0, 0);
             chargeTime += Time.deltaTime;
         }
@@ -307,6 +331,11 @@ public class PlayerController : MonoBehaviour
                 }
                 if (comboCount == 2)
                 {
+                    if (chargedAttack)
+                    {
+                        Instantiate(Swordwave2, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                        chargedAttack = false;
+                    }
                     anim.SetBool("chargeattacking2", true);
                     isCharge = false;
                     isAttack = true;
@@ -454,11 +483,21 @@ public class PlayerController : MonoBehaviour
             health -= getdamage;
         }
     }
+    public void GetHeal(int heal)
+    {
+        if (health + heal >= healthMax)
+        {
+            health = healthMax;
+        }
+        else health += heal;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") || collision.CompareTag("EliteEnemy"))
         {
             collision.GetComponent<Enemy>().GetHit(damage, 0.2f);
+            if (energy + 4 >= energyMax) energy = energyMax;
+            else energy += 4;
         }
     }
 }

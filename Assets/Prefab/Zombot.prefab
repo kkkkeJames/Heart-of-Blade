@@ -288,6 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 200
   damage: 0
+  healthloot: {fileID: 2121341635760298815, guid: c49c7791e1cad834881d00896d56b25d, type: 3}
   direction: 0
   playerTransform: {fileID: 0}
   moveSpeed: 0.5

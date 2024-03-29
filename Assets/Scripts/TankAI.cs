@@ -35,33 +35,46 @@ public class TankAI : Enemy
     {
         base.Update();
 
-        // start dash when conditions are met
-        if (currDashCooldown <= 0 && math.abs(rb.position.x - playerTransform.position.x) <= 6f) {
-            anim.SetBool("dashing", true);
-            isDashing = true;
-            rb.velocity = new Vector2(dashSpeed * rb.velocity.x, rb.velocity.y);
-            currDashCooldown = dashCooldown;
-        }
+        if (!Stunned)
+        {
+            // start dash when conditions are met
+            if (currDashCooldown <= 0 && math.abs(rb.position.x - playerTransform.position.x) <= 6f)
+            {
+                anim.SetBool("dashing", true);
+                isDashing = true;
+                rb.velocity = new Vector2(dashSpeed * rb.velocity.x, rb.velocity.y);
+                currDashCooldown = dashCooldown;
+            }
 
-        // end dash when conditions are met
-        if (currDashDuration <= 0) {
-            anim.SetBool("dashing", false);
-            isDashing = false;
-            currDashDuration = dashDuration;
-        }
+            // end dash when conditions are met
+            if (currDashDuration <= 0)
+            {
+                anim.SetBool("dashing", false);
+                isDashing = false;
+                currDashDuration = dashDuration;
+            }
 
-        // daaaaaaaash
-        if (isDashing) {
-            currDashDuration -= Time.deltaTime;
-        }
+            // daaaaaaaash
+            if (isDashing)
+            {
+                currDashDuration -= Time.deltaTime;
+            }
 
-        // switch direction to follow player iff not dashing
-        else {
-            if (playerTransform.position.x >= transform.position.x) {
-                rb.velocity = new Vector2(baseSpeed.x, rb.velocity.y);
-            } else rb.velocity = new Vector2(-baseSpeed.x, rb.velocity.y);
-            currDashCooldown -= Time.deltaTime;
-        } 
+            // switch direction to follow player iff not dashing
+            else
+            {
+                if (playerTransform.position.x >= transform.position.x)
+                {
+                    rb.velocity = new Vector2(baseSpeed.x, rb.velocity.y);
+                }
+                else rb.velocity = new Vector2(-baseSpeed.x, rb.velocity.y);
+                currDashCooldown -= Time.deltaTime;
+            }
+        }
+        if (Stunned)
+        {
+            rb.velocity = new Vector2(-StunTime * direction * 1f, rb.velocity.y);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
